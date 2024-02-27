@@ -1,8 +1,10 @@
-NAME = project3.a
+NAME = tasks.a
 
-SRC = task1.cc task2.cc
-HEADER = project3.h messages.h colors.h
-TEST = test_project3.cc
+SRC = task1.cc \
+	  task2.cc
+
+HEADER = tasks.h tasks_errors.h
+TEST = test/test_tasks.cc
 
 OBJ_FOLDER = obj
 OBJ = $(SRC:%.cc=$(OBJ_FOLDER)/%.o)
@@ -19,14 +21,18 @@ NO_COLOR = \x1b[0m
 RESET = \033[0m
 
 
-all: $(NAME)
+all: common_lib $(NAME)
 .PHONY: all
 
-$(NAME): $(OBJ_FOLDER) $(OBJ)
+$(NAME): ../common/common.a $(OBJ_FOLDER) $(OBJ)
 	@ar rc $(NAME) obj/*
 	@ranlib $(NAME)
 	@printf "$(CURSIVE)Wait...⌛ $(YELLOW)%s$(NO_COLOR) was successfully assembled! %-37s" $(NAME)""
 	@echo "\n"
+
+common_lib:
+	@make -C ../common/
+.PHONY: common_lib
 
 $(OBJ_FOLDER):
 	@mkdir $(OBJ_FOLDER)
@@ -36,10 +42,12 @@ $(OBJ_FOLDER)/%.o: %.cc $(HEADER) Makefile
 	@printf "$(CURSIVE)Compiling source files 🚀... $(YELLOW)%-13s $(NO_COLOR)---> %17.33s ✅\r" $< $@
 
 clean:
+	@make clean -C ../common/
 	@rm -rf obj
 .PHONY: clean
 
 fclean: clean
+	@make fclean -C ../common/
 	@rm -rf *.a a.out .*.swp *.*.gch .DS_Store test_bin a.out.dSYM $(NAME)
 	@echo "$(GRAY)$(CURSIVE)---$(NAME) staff is completely cleaned!\n"
 .PHONY: fclean
@@ -48,10 +56,12 @@ re: fclean all
 .PHONY: re
 
 test: all
+	@make test -C ../common/
 	@g++ -std=c++17 $(TEST) $(NAME) -lgtest -lgtest_main -pthread -o test_bin
 .PHONY: test
 
 leaks: test
+	@make leaks -C ../common/
 	@leaks -quiet --atExit -- ./test_bin
 .PHONY: leaks
 

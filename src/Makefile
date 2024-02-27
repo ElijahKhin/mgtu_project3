@@ -1,10 +1,9 @@
-NAME = project3
+NAME = mini_console_p3
 
 PREREQUISITE_P3 = \
 				  Makefile \
-				  ./tasks/messages.h \
-				  ./tasks/project3.h \
-				  ./tasks/colors.h
+				  messages.h \
+				  colors.h
 
 SRC = main.cc
 
@@ -25,7 +24,7 @@ RESET = \033[0m
 
 all: tasks_lib $(NAME)
 
-$(NAME): tasks/$(NAME).a $(OBJ_FOLDER) $(OBJ)
+$(NAME): tasks/tasks.a $(OBJ_FOLDER) $(OBJ)
 	@$(CLR) $(FLAGS) $(OBJ_FOLDER)/*.o -L. \
 		tasks/$(NAME).a -o $(NAME)
 	@echo "----------------------------------------------------------\n"
@@ -52,6 +51,7 @@ clean:
 fclean: clean
 	@make fclean -C tasks/
 	@rm -rf *.a a.out .*.swp *.*.gch .DS_Store test_bin a.out.dSYM $(NAME)
+	@echo "$(GRAY)$(CURSIVE)---$(NAME) staff is completely cleaned!\n"
 
 .PHONY: fclean
 

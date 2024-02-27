@@ -1,4 +1,6 @@
-#include "tasks/project3.h"
+#include "tasks/tasks.h"
+#include "messages.h"
+#include "colors.h"
 
 inline static void	isDigit(int ch) {
 	if (!(ch >= 48 && ch <= 57)) throw std::invalid_argument(ERROR_DIGIT);
@@ -105,9 +107,7 @@ static int launchTask234(int (*task)(int)) {
 	int attempts;
 
 	(std::cin).get(ch);
-	do {
-		task(getUserNumber('n'));
-	} while (continueTask(attempts));
+	do task(getUserNumber('n')); while (continueTask(attempts));
 	return 0;
 }
 
