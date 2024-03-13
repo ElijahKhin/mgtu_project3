@@ -1,23 +1,18 @@
 #include "tasks.h"
-#include <iostream>
-#include <iomanip>
 
-static int productPositiveOrZeroA(int result, int i) {
+inline static void isRangeExceeded(double a) {
+	if (!(a <= MAX_INT && a >= MIN_INT)) throw std::out_of_range(ERROR_RANGE_WAS_EXCEEDED);
+}
+
+static int productPositiveA(int result, int i) {
 	result *= sw_pow(i, 2);
-	if (i == 8) return result; 
-	return productPositiveOrZeroA(result, i+2);
+	if (i == 8) return result;
+	return productPositiveA(result, i+2);
 }
 
 double task2(double a) {
-	double result = 28;
-	
-	if (a >= 0) result = productPositiveOrZeroA(1, 2) - a;
-	return result;
-}
-
-int main() {
-	for (int p = 1; p < 10; p++) {
-	//	std::cout << std::setw(2) << p << " " << std::setprecision(p) << task2(-5.7) << std::endl;
-		std::cout << std::setw(2) << p << " " << std::setprecision(p) << 0.123412521342 << std::endl;
-	}
+	isRangeExceeded(a);
+	if (a < 0) return 28;
+	else if (a == 0) return 147456;
+	return productPositiveA(1, 2) - a;
 }

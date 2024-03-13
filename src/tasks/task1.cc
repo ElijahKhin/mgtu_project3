@@ -1,22 +1,25 @@
 #include "tasks.h"
 
-inline static void isNbtM(unsigned long n, unsigned long m) {
-	if (!(n > m)) throw std::invalid_argument(ERROR_NLTM);
+inline static void isWrongInput(int n, int m) {
+	if (!(n > m && n > 0 && m >= 0)) 
+		throw std::invalid_argument(ERROR_WRONG_INPUT);
 }
 
-inline static void isBigSum(unsigned long sum) {
-	if (sum > MAX_UNSIGNED_INT) throw std::out_of_range(ERROR_BIG_SUM);
+inline static void isRangeExceeded(int sum) {
+	if (sum < 0) throw std::out_of_range(ERROR_RANGE_WAS_EXCEEDED);
 }
 
-unsigned task1(unsigned n, unsigned m) {
-	unsigned long sum = 5;
+int task1(int n, int m) {
+	int sum = 5;
 
-	isNbtM(n, m); // Is N bigger than M?
-	if (m == 1 || m == 5) sum = 0;
-	else {
-		for (unsigned i = 2; n > 1; i++)
-			if (i % m) {sum += 5 * i; n--; isBigSum(sum);}
+	isWrongInput(n, m); // Is N bigger than M?
+	if (m == 1 || m == 5) return 0; 
+	for (int i = 2; n > 1; i++) {
+		if (i % m) {
+			sum += 5 * i; 
+			n--; 
+			isRangeExceeded(sum);
+		}
 	}
-//	std::cout << BOLDMAGENTA << "Task#1 result: " << sum << RESET << std::endl;
 	return sum;
 }

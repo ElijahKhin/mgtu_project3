@@ -2,7 +2,8 @@ NAME = common.a
 
 SRC = sw_pow.cc \
 	  sw_isdigit.cc \
-	  sw_atoi.cc
+	  sw_atoi.cc \
+	  sw_factorial.cc
 
 HEADER = common.h
 TEST = ./test/test_common.cc

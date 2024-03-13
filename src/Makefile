@@ -26,7 +26,7 @@ all: tasks_lib $(NAME)
 
 $(NAME): tasks/tasks.a $(OBJ_FOLDER) $(OBJ)
 	@$(CLR) $(FLAGS) $(OBJ_FOLDER)/*.o -L. \
-		tasks/$(NAME).a -o $(NAME)
+		$< -o $(NAME)
 	@echo "----------------------------------------------------------\n"
 	@printf "$(CURSIVE)Assembling $(NAME) ⚙️ ... $(GREEN)DONE! 🥂$(RESET)"
 	@echo "\n"
