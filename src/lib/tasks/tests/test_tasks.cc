@@ -104,11 +104,60 @@ TEST(SecondTask, PositiveA) {
   EXPECT_EQ(task2(125243.52341234213521342153234), 22212.47658765786);
 }
 
-/*--- TESIING TASK#2 ---*/
+/*--- TESIING TASK#3 ---*/
 
-TEST(ThirdTask, ZeroA) {
-  EXPECT_EQ(task2(0), 147456);
+TEST(ThirdTask, isAllowedError) {
+  t_task3* table = new t_task3;
+	t_task3* tmp;
+  task3(table);
+  
+
+  for (int i = 0; i < 6; i++) {
+		EXPECT_NEAR(table->ref, table->taylor, ALLOWED_ERROR);
+//		std::cout << std::setprecision(15) << std::fixed << table->x << " " << table->ref << " " << table->taylor << " " << table->last_n << std::endl;
+  	if (table->prev != NULL) table = table->prev;
+  }
+
+	while (table->next != NULL) {
+		tmp = table;
+		table = table->next;
+		delete tmp;
+	}
+	delete table;
 }
+
+TEST(ThirdTask, LastValues) {
+  t_task3* table = new t_task3;
+	t_task3* tmp;
+  task3(table);
+  
+
+	EXPECT_TRUE(
+			table->x == 1 && 
+			table->ref == 8.154845485377136 && 
+			table->taylor == 8.154844852292769 && 
+			table->last_n == 11);
+
+	while (table->prev != NULL) {
+		tmp = table;
+		table = table->prev;
+		delete tmp;
+	}
+	delete table;
+}
+
+TEST(FourthTask, SimpleOne) {
+	double* checkpoints = new double[3];
+
+	task4(checkpoints, 0, 3);
+
+	EXPECT_EQ(checkpoints[0], 0.44615384615384618);
+	EXPECT_EQ(checkpoints[1], 0.24137931034482757);
+	EXPECT_EQ(checkpoints[2], 0.14285714285714285);
+
+	delete[] checkpoints;
+}
+
 
 int main(int argc, char** argv) {
   testing::InitGoogleTest(&argc, argv);

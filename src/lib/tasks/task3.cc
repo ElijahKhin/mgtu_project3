@@ -3,9 +3,9 @@
 inline static void SetUpList(t_task3*& table) {
 	t_task3* tmp;
 
+	table->next = new t_task3;
 	tmp = table;
 	table = table->next;
-	table = new t_task3;
 	table->prev = tmp;
 }
 
@@ -14,7 +14,7 @@ inline static double ReferenceFormula(float x) {
 }
 
 inline static bool IsAllowedError(double error) {
-	std::cout << std::setprecision(7) << std::fixed << "error: " << error << " | AE:" << ALLOWED_ERROR << std::endl;
+//	std::cout << std::setprecision(7) << std::fixed << "error: " << error << " | AE:" << ALLOWED_ERROR << std::endl;
 	if (-ALLOWED_ERROR <= error && error <= ALLOWED_ERROR)
 		return true;
 	return false;
@@ -31,12 +31,13 @@ static void TaylorSeria(t_task3*& table) {
 }
 
 void task3(t_task3*& table) {
-	table = new t_task3;
+	table->prev = NULL;
 	table->x = 0;
 	for (int i = 0; i < 6; i++) {
+//		std::cout << "current i: " << i << " and x: " << table->x << std::endl;
 		table->ref = ReferenceFormula(table->x); 
 		TaylorSeria(table);
-		SetUpList(table);
-		table->x = table->prev->x + 0.2;
+		if (i != 5) {SetUpList(table); table->x = table->prev->x + 0.2;}
+		else table->next = NULL;
 	}
 }

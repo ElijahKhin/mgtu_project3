@@ -16,3 +16,4 @@ double task2(double a) {
 	else if (a == 0) return 147456;
 	return productPositiveA(1, 2) - a;
 }
+

@@ -5,8 +5,8 @@ SRC = task1.cc \
 	  task3.cc \
 	  task4.cc
 
-HEADER = tasks.h tasks_errors.h
-TEST = test/test_tasks.cc
+HEADER = tasks.h errors.h
+TEST = tests/test_tasks.cc
 
 OBJ_FOLDER = obj
 OBJ = $(SRC:%.cc=$(OBJ_FOLDER)/%.o)
