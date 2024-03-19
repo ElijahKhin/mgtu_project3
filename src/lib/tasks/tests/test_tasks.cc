@@ -5,72 +5,72 @@
 /* --- TESTING TASK#1 ---*/
 
 TEST(FirstTask, ZeroDiv) {
-  EXPECT_EQ(task1(1,0), 5);
-  EXPECT_EQ(task1(2,0), 15);
-  EXPECT_EQ(task1(3,0), 30);
-  EXPECT_EQ(task1(4,0), 50);
-  EXPECT_EQ(task1(5,0), 75);
-  EXPECT_EQ(task1(6,0), 105);
-  EXPECT_EQ(task1(7,0), 140);
-  EXPECT_EQ(task1(8,0), 180);
-  EXPECT_EQ(task1(9,0), 225);
-  EXPECT_EQ(task1(10,0), 275);
-  EXPECT_EQ(task1(50,0), 6375);
-  EXPECT_EQ(task1(500,0), 626250);
+  EXPECT_EQ(task1(1, 0), 5);
+  EXPECT_EQ(task1(2, 0), 15);
+  EXPECT_EQ(task1(3, 0), 30);
+  EXPECT_EQ(task1(4, 0), 50);
+  EXPECT_EQ(task1(5, 0), 75);
+  EXPECT_EQ(task1(6, 0), 105);
+  EXPECT_EQ(task1(7, 0), 140);
+  EXPECT_EQ(task1(8, 0), 180);
+  EXPECT_EQ(task1(9, 0), 225);
+  EXPECT_EQ(task1(10, 0), 275);
+  EXPECT_EQ(task1(50, 0), 6375);
+  EXPECT_EQ(task1(500, 0), 626250);
 }
 
 TEST(FirstTask, OneDiv) {
-  EXPECT_EQ(task1(2,1), 0);
-  EXPECT_EQ(task1(3,1), 0);
-  EXPECT_EQ(task1(4,1), 0);
-  EXPECT_EQ(task1(5,1), 0);
-  EXPECT_EQ(task1(6,1), 0);
-  EXPECT_EQ(task1(7,1), 0);
-  EXPECT_EQ(task1(8,1), 0);
-  EXPECT_EQ(task1(9,1), 0);
-  EXPECT_EQ(task1(10,1), 0);
-  EXPECT_EQ(task1(50,1), 0);
-  EXPECT_EQ(task1(500,1), 0);
+  EXPECT_EQ(task1(2, 1), 0);
+  EXPECT_EQ(task1(3, 1), 0);
+  EXPECT_EQ(task1(4, 1), 0);
+  EXPECT_EQ(task1(5, 1), 0);
+  EXPECT_EQ(task1(6, 1), 0);
+  EXPECT_EQ(task1(7, 1), 0);
+  EXPECT_EQ(task1(8, 1), 0);
+  EXPECT_EQ(task1(9, 1), 0);
+  EXPECT_EQ(task1(10, 1), 0);
+  EXPECT_EQ(task1(50, 1), 0);
+  EXPECT_EQ(task1(500, 1), 0);
 }
 
 TEST(FirstTask, BasicDiv) {
-  EXPECT_EQ(task1(3,2), 45);
-  EXPECT_EQ(task1(4,3), 60);
-  EXPECT_EQ(task1(5,4), 85);
+  EXPECT_EQ(task1(3, 2), 45);
+  EXPECT_EQ(task1(4, 3), 60);
+  EXPECT_EQ(task1(5, 4), 85);
 }
 
 TEST(FirstTask, RangeExceeded) {
   try {
-    task1(1000000,0);
-  } catch (std::out_of_range& e) {
+    task1(1000000, 0);
+  } catch (std::out_of_range &e) {
     ASSERT_EQ(std::string(ERROR_RANGE_WAS_EXCEEDED), e.what());
   }
 }
 
 TEST(FirstTask, NvsM) {
   try {
-    task1(5,5);
-  } catch (std::invalid_argument& e) {
+    task1(5, 5);
+  } catch (std::invalid_argument &e) {
     ASSERT_EQ(std::string(ERROR_WRONG_INPUT), e.what());
   }
   try {
-    task1(4,5);
-  } catch (std::invalid_argument& e) {
+    task1(4, 5);
+  } catch (std::invalid_argument &e) {
     ASSERT_EQ(std::string(ERROR_WRONG_INPUT), e.what());
   }
 }
 
 /*--- TESIING TASK#2 ---*/
 
-TEST(SecondTask,RangeExceeded) {
+TEST(SecondTask, RangeExceeded) {
   try {
     task2(MAX_INT);
-  } catch (std::out_of_range& e) {
+  } catch (std::out_of_range &e) {
     ASSERT_EQ(std::string(ERROR_RANGE_WAS_EXCEEDED), e.what());
   }
   try {
     task2(MIN_INT);
-  } catch (std::out_of_range& e) {
+  } catch (std::out_of_range &e) {
     ASSERT_EQ(std::string(ERROR_RANGE_WAS_EXCEEDED), e.what());
   }
 }
@@ -90,9 +90,7 @@ TEST(SecondTask, NegativeA) {
   EXPECT_EQ(task2(-125243.5234), 28);
 }
 
-TEST(SecondTask, ZeroA) {
-  EXPECT_EQ(task2(0), 147456);
-}
+TEST(SecondTask, ZeroA) { EXPECT_EQ(task2(0), 147456); }
 
 TEST(SecondTask, PositiveA) {
   EXPECT_EQ(task2(0.5), 147455.5);
@@ -107,59 +105,53 @@ TEST(SecondTask, PositiveA) {
 /*--- TESIING TASK#3 ---*/
 
 TEST(ThirdTask, isAllowedError) {
-  t_task3* table = new t_task3;
-	t_task3* tmp;
+  t_task3 *table = new t_task3;
+  t_task3 *tmp;
   task3(table);
-  
 
   for (int i = 0; i < 6; i++) {
-		EXPECT_NEAR(table->ref, table->taylor, ALLOWED_ERROR);
-//		std::cout << std::setprecision(15) << std::fixed << table->x << " " << table->ref << " " << table->taylor << " " << table->last_n << std::endl;
-  	if (table->prev != NULL) table = table->prev;
+    EXPECT_NEAR(table->ref, table->taylor, ALLOWED_ERROR);
+    if (table->prev != NULL)
+      table = table->prev;
   }
 
-	while (table->next != NULL) {
-		tmp = table;
-		table = table->next;
-		delete tmp;
-	}
-	delete table;
+  while (table->next != NULL) {
+    tmp = table;
+    table = table->next;
+    delete tmp;
+  }
+  delete table;
 }
 
 TEST(ThirdTask, LastValues) {
-  t_task3* table = new t_task3;
-	t_task3* tmp;
+  t_task3 *table = new t_task3;
+  t_task3 *tmp;
   task3(table);
-  
 
-	EXPECT_TRUE(
-			table->x == 1 && 
-			table->ref == 8.154845485377136 && 
-			table->taylor == 8.154844852292769 && 
-			table->last_n == 11);
+  EXPECT_TRUE(table->x == 1 && table->ref == 8.154845485377136 &&
+              table->taylor == 8.154844852292769 && table->last_n == 11);
 
-	while (table->prev != NULL) {
-		tmp = table;
-		table = table->prev;
-		delete tmp;
-	}
-	delete table;
+  while (table->prev != NULL) {
+    tmp = table;
+    table = table->prev;
+    delete tmp;
+  }
+  delete table;
 }
 
 TEST(FourthTask, SimpleOne) {
-	double* checkpoints = new double[3];
+  double *checkpoints = new double[3];
 
-	task4(checkpoints, 0, 3);
+  task4(checkpoints, 0, 3);
 
-	EXPECT_EQ(checkpoints[0], 0.44615384615384618);
-	EXPECT_EQ(checkpoints[1], 0.24137931034482757);
-	EXPECT_EQ(checkpoints[2], 0.14285714285714285);
+  EXPECT_EQ(checkpoints[0], 0.44615384615384618);
+  EXPECT_EQ(checkpoints[1], 0.24137931034482757);
+  EXPECT_EQ(checkpoints[2], 0.14285714285714285);
 
-	delete[] checkpoints;
+  delete[] checkpoints;
 }
 
-
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

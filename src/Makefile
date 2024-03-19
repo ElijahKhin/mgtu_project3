@@ -24,7 +24,7 @@ RESET = \033[0m
 
 all: tasks_lib $(NAME)
 
-$(NAME): tasks/tasks.a $(OBJ_FOLDER) $(OBJ)
+$(NAME): lib/tasks/tasks.a $(OBJ_FOLDER) $(OBJ)
 	@$(CLR) $(FLAGS) $(OBJ_FOLDER)/*.o -L. \
 		$< -o $(NAME)
 	@echo "----------------------------------------------------------\n"
@@ -32,24 +32,22 @@ $(NAME): tasks/tasks.a $(OBJ_FOLDER) $(OBJ)
 	@echo "\n"
 
 tasks_lib:
-	@make -C tasks/
+	@make -C lib/tasks/
 .PHONY: tasks_lib
 
 $(OBJ_FOLDER):
 	@mkdir $(OBJ_FOLDER)
 
-
 $(OBJ_FOLDER)/%.o: %.cc $(PREREQUISITE_P3)
 	@$(CLR) -c $(FLAGS) $< -o $@
 
-
 clean:
-	@make clean -C tasks/
+	@make clean -C lib/tasks/
 	@rm -rf obj
 .PHONY: clean
 
 fclean: clean
-	@make fclean -C tasks/
+	@make fclean -C lib/tasks/
 	@rm -rf *.a a.out .*.swp *.*.gch .DS_Store test_bin a.out.dSYM $(NAME)
 	@echo "$(GRAY)$(CURSIVE)---$(NAME) staff is completely cleaned!\n"
 
@@ -59,9 +57,9 @@ re: fclean all
 .PHONY: re
 
 test: all
-	@make test -C tasks/
+	@make test -C lib/tasks/
 .PHONY: test
 
 leaks: test
-	@make leaks -C tasks/
+	@make leaks -C lib/tasks/
 .PHONY: leaks

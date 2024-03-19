@@ -1,9 +1,13 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-int sw_isdigit(int ch) noexcept;
-int sw_atoi(const char* str) noexcept;
-double sw_pow(double value, int power) noexcept;
-int sw_factorial(int value) noexcept;
+#include <iostream>
+
+int IsDigit(int ch) noexcept;
+int Atoi(const char* str) noexcept;
+double Pow(double value, int power) noexcept;
+int Factorial(int value) noexcept;
+double ReadUserNumericInput(std::istream& input, double*& userInput);
+
 
 #endif

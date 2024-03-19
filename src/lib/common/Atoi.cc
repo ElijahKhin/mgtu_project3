@@ -1,6 +1,6 @@
 #include "common.h"
 
-int	sw_atoi(const char* str) noexcept {
+int	Atoi(const char* str) noexcept {
 	int	i;
 	int	sign;
 	int	result;
@@ -13,7 +13,7 @@ int	sw_atoi(const char* str) noexcept {
 	if (str[i] == '-') sign = -1;
 	if (str[i] == '-' || str[i] == '+') i++;
 	result = 0;
-	while (sw_isdigit(str[i]))
+	while (IsDigit(str[i]))
 		result = result * 10 + (str[i++] - '0');
 	return (result * sign);
 }

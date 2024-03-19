@@ -1,4 +1,4 @@
-double sw_pow(double value, int power) noexcept {
+double Pow(double value, int power) noexcept {
 	double result = value;
 
 	if (power == 0) return 1;
